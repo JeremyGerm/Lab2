@@ -9,6 +9,9 @@ public class PlayerController : MonoBehaviour
     public Camera playerCamera;
     public float mouseSensitivity = 100f;
 
+    public float coyoteTime = 0.15f;
+
+    private float coyoteTimeCounter;
     private CharacterController controller;
     private Vector3 velocity;
     private float xRotation = 0f;
@@ -30,16 +33,26 @@ public class PlayerController : MonoBehaviour
 
         controller.Move(move * moveSpeed * Time.deltaTime);
 
-        // Check if player is on the ground
-        if (controller.isGrounded && velocity.y < 0)
-        {
-            velocity.y = -2f;
-        }
+        // // Check if player is on the ground
+        // if (controller.isGrounded && velocity.y < 0)
+        // {
+        //     velocity.y = -2f;
+        // }
 
         // Jump
-        if (Input.GetButtonDown("Jump") && controller.isGrounded)
+        if (controller.isGrounded)
+        {
+            coyoteTimeCounter = coyoteTime;
+        }
+        else
+        {
+            coyoteTimeCounter -= Time.deltaTime;
+        }
+
+        if (Input.GetButtonDown("Jump") && coyoteTimeCounter > 0f)
         {
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+            coyoteTimeCounter = 0f;
         }
 
         // Gravity
