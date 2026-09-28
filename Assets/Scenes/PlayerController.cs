@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -90,6 +91,10 @@ public class PlayerController : MonoBehaviour
         if (hit.collider.CompareTag("Target"))
         {
             Destroy(hit.collider.gameObject);
+        }
+        if (hit.collider.CompareTag("Goal"))
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
     }
 //     Debug.DrawRay(
