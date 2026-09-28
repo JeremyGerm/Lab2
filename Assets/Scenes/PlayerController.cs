@@ -26,7 +26,6 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        // WASD movement
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
 
@@ -34,13 +33,6 @@ public class PlayerController : MonoBehaviour
 
         controller.Move(move * moveSpeed * Time.deltaTime);
 
-        // // Check if player is on the ground
-        // if (controller.isGrounded && velocity.y < 0)
-        // {
-        //     velocity.y = -2f;
-        // }
-
-        // Jump
         if (controller.isGrounded)
         {
             coyoteTimeCounter = coyoteTime;
@@ -56,12 +48,10 @@ public class PlayerController : MonoBehaviour
             coyoteTimeCounter = 0f;
         }
 
-        // Gravity
         velocity.y += gravity * Time.deltaTime;
 
         controller.Move(velocity * Time.deltaTime);
 
-        // Mouse look
         float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
         float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
 
@@ -72,7 +62,6 @@ public class PlayerController : MonoBehaviour
 
         transform.Rotate(Vector3.up * mouseX);
 
-        // Raycast
         if (Input.GetMouseButtonDown(0))
         {
             ShootRaycast();
